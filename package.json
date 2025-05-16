@@ -1,0 +1,32 @@
+{
+  "name": "grpc",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "setup": "npm i && npm run generate-types && npm run build",
+    "start:server": "node dist/server/server.js",
+    "start:client": "node dist/client/client.js",
+    "dev:server": "nodemon src/server/server.ts",
+    "dev:client": "nodemon src/client/client.ts",
+    "build": "tsc",
+    "cleanup": "rm -rf ./node_modules ./dist ./generated ./package-lock.json",
+    "create-directories": "npx mkdirp ./generated/js ./generated/types ./generated/grpc",
+    "generate-grpc": "npx grpc_tools_node_protoc --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts --ts_out=grpc_js:./generated/types --js_out=import_style=commonjs,binary:./generated/js --grpc_out=grpc_js:./generated/grpc -I ./src/proto ./src/proto/greeter.proto",
+    "generate-types": "npm run create-directories && npm run generate-grpc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.13.3",
+    "@grpc/proto-loader": "^0.7.15"
+  },
+  "devDependencies": {
+    "grpc_tools_node_protoc_ts": "^5.3.3",
+    "grpc-tools": "^1.13.0",
+    "mkdirp": "^3.0.1",
+    "nodemon": "^3.1.10",
+    "typescript": "^5.8.3"
+  }
+}
