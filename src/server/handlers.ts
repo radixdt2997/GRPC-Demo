@@ -1,8 +1,7 @@
-import { IGreeterServer } from "generated/types/greeter_grpc_pb";
-import { HelloReply } from "generated/types/greeter_pb";
+import { IGreeterServer } from "../../generated/types/greeter_grpc_pb";
 
 export const sayHello: IGreeterServer["sayHello"] = (call, callback) => {
-  const reply = new HelloReply();
+  const reply = new proto.greeter.HelloReply();
   reply.setMessage(`Hello, ${call.request.getName()}`);
   callback(null, reply);
 };

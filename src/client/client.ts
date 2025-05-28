@@ -1,19 +1,16 @@
 import * as grpc from "@grpc/grpc-js";
-import { GreeterClient } from "generated/types/greeter_grpc_pb";
-import { HelloRequest } from "generated/types/greeter_pb";
-import { createClient } from "../common/grpc";
+import { GreeterClient } from "../../generated/grpc/greeter_grpc_pb";
 import { logger } from "../common/logger";
 
-const client = createClient(
-  GreeterClient,
+const client = new GreeterClient(
   "localhost:50051",
   grpc.credentials.createInsecure()
 );
 
-const request = new HelloRequest();
+const request = new proto.greeter.HelloRequest();
 request.setName("Shrey");
 
-client.sayHello(request, (error: grpc.ServiceError | null, response: any) => {
+client.sayHello(request, (error, response) => {
   if (error) {
     logger.error(`Error: ${error.message}`);
     return;
